@@ -24,10 +24,16 @@ class _ChoiceItemState extends State<ChoiceItem> {
   final Color unselectedTextColor = Colors.black;
   final Color unselectedBackgroundColor =
       const Color.fromRGBO(245, 245, 245, 1);
+
   bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
+    Color textColor = isSelected ? selectedTextColor : unselectedTextColor;
+    Color backgroundColor = isSelected == false
+        ? unselectedBackgroundColor
+        : selectedBackgroundColor; // Only for when not selected
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
@@ -39,7 +45,7 @@ class _ChoiceItemState extends State<ChoiceItem> {
         label: Text(
           widget.label,
           style: TextStyle(
-            color: isSelected ? selectedTextColor : unselectedTextColor,
+            color: textColor,
           ),
         ),
         selectedColor: selectedBackgroundColor,
@@ -54,9 +60,7 @@ class _ChoiceItemState extends State<ChoiceItem> {
             }
           }
         },
-        backgroundColor: isSelected == false
-            ? unselectedBackgroundColor
-            : selectedBackgroundColor, // Only for when not selected
+        backgroundColor: backgroundColor,
       ),
     );
   }
