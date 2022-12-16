@@ -2,12 +2,11 @@ import 'package:choose_my_hobbies/choice_item.dart';
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
-  List<String> availableHobbies;
   List<ChoiceItem> selectedHobbies = [];
 
   Footer({
     Key? key,
-    required this.availableHobbies,
+    required List<String> availableHobbies,
     required void Function(String chip) addToHobbies,
     required void Function(String chip) removeFromHobbies,
   }) : super(key: key) {
@@ -32,14 +31,17 @@ class Footer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Passe-temps disponibles',
-              textAlign: TextAlign.start,
-              textDirection: TextDirection.ltr,
-              style: TextStyle(
-                color: Color.fromRGBO(35, 93, 113, 1),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            const Padding(
+              padding: EdgeInsets.only(bottom: 15.0),
+              child: Text(
+                'Passe-temps disponibles',
+                textAlign: TextAlign.start,
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  color: Color.fromRGBO(35, 93, 113, 1),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Expanded(
@@ -48,9 +50,21 @@ class Footer extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Wrap(
-                      runAlignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      children: selectedHobbies),
+                    runAlignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: selectedHobbies.isNotEmpty
+                        ? selectedHobbies
+                        : [
+                            const Text(
+                              'Aucun passe-temps disponible',
+                              textAlign: TextAlign.start,
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Color.fromRGBO(35, 93, 113, 1),
+                              ),
+                            ),
+                          ],
+                  ),
                 ),
               ),
             )
