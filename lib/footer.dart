@@ -2,97 +2,24 @@ import 'package:choose_my_hobbies/choice_item.dart';
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
-  final List<String> availableHobbies = [
-    'Football',
-    'Basketball',
-    'Volleyball',
-    'Tennis',
-    'Badminton',
-    'Ping Pong',
-    'Golf',
-    'Rugby',
-    'Handball',
-    'Cyclisme',
-    'Natation',
-    'Aviron',
-    'Equitation',
-    'Escalade',
-    'Ski',
-    'Snowboard',
-    'Squash',
-    'Boxe',
-    'Judo',
-    'Taekwondo',
-    'Karate',
-    'Aikido',
-    'Yoga',
-    'Pilates',
-    'Danse',
-    'Cinéma',
-    'Théâtre',
-    'Musique',
-    'Lecture',
-    'Cuisine',
-    'Peinture',
-    'Photographie',
-    'Couture',
-    'Tricot',
-    'Bricolage',
-    'Jardinage',
-    'Décoration',
-    'Voyage',
-    'Camping',
-    'Pêche',
-    'Chasse',
-    'Poker',
-    'Billard',
-    'Jeux de société',
-    'Jeux vidéo',
-    'Informatique',
-    'Programmation',
-    'Robotique',
-    'Astronomie',
-    'Bricolage',
-    'Jardinage',
-    'Décoration',
-    'Voyage',
-    'Camping',
-    'Pêche',
-    'Chasse',
-    'Poker',
-    'Billard',
-    'Jeux de société',
-    'Jeux vidéo',
-    'Informatique',
-    'Programmation',
-    'Robotique',
-    'Astronomie',
-    'Bricolage',
-    'Jardinage',
-    'Décoration',
-    'Voyage',
-    'Camping',
-    'Pêche',
-    'Chasse',
-    'Poker',
-    'Billard',
-    'Jeux de société',
-    'Jeux vidéo',
-    'Informatique',
-    'Programmation',
-    'Robotique',
-    'Astronomie',
-    'Bricolage',
-    'Jardinage',
-    'Décoration',
-    'Voyage',
-    'Camping',
-    'Pêche',
-    'Chasse',
-    'Poker'
-  ];
+  List<String> availableHobbies;
+  List<ChoiceItem> selectedHobbies = [];
 
-  Footer({Key? key}) : super(key: key);
+  Footer({
+    Key? key,
+    required this.availableHobbies,
+    required void Function(String chip) addToHobbies,
+    required void Function(String chip) removeFromHobbies,
+  }) : super(key: key) {
+    selectedHobbies = availableHobbies
+        .map((e) => ChoiceItem(
+              label: e,
+              isClickable: true,
+              addToHobbies: addToHobbies,
+              removeFromHobbies: removeFromHobbies,
+            ))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +39,7 @@ class Footer extends StatelessWidget {
               style: TextStyle(
                 color: Color.fromRGBO(35, 93, 113, 1),
                 fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
             Expanded(
@@ -120,16 +48,9 @@ class Footer extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Wrap(
-                    runAlignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    children: availableHobbies
-                        .map((e) =>
-                        ChoiceItem(
-                          label: e,
-                          isClickable: true,
-                        ))
-                        .toList(),
-                  ),
+                      runAlignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: selectedHobbies),
                 ),
               ),
             )

@@ -18,12 +18,13 @@ class Header extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Vos passe-temps',
+              'Vos passe-temps :',
               textAlign: TextAlign.start,
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
             Expanded(
@@ -37,7 +38,7 @@ class Header extends StatelessWidget {
                     children: myHobbies
                         .map((e) => ChoiceItem(
                               label: e,
-                              isClickable: true,
+                              isClickable: false,
                             ))
                         .toList(),
                   ),

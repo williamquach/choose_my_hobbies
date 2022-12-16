@@ -3,14 +3,27 @@ import 'package:flutter/material.dart';
 class ChoiceItem extends StatefulWidget {
   final String label;
   final bool isClickable;
+  final Function(String chip)? addToHobbies;
+  final Function(String chip)? removeFromHobbies;
 
-  const ChoiceItem({Key? key, required this.label, required this.isClickable}) : super(key: key);
+  const ChoiceItem({
+    Key? key,
+    required this.label,
+    required this.isClickable,
+    this.addToHobbies,
+    this.removeFromHobbies,
+  }) : super(key: key);
 
   @override
   State<ChoiceItem> createState() => _ChoiceItemState();
 }
 
 class _ChoiceItemState extends State<ChoiceItem> {
+  final Color selectedTextColor = Colors.white;
+  final Color selectedBackgroundColor = const Color.fromRGBO(35, 93, 113, 1);
+  final Color unselectedTextColor = Colors.black;
+  final Color unselectedBackgroundColor =
+      const Color.fromRGBO(245, 245, 245, 1);
   bool isSelected = false;
 
   @override
@@ -21,25 +34,29 @@ class _ChoiceItemState extends State<ChoiceItem> {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: GestureDetector(
-        onTap: () {
+      child: ChoiceChip(
+        selected: isSelected,
+        label: Text(
+          widget.label,
+          style: TextStyle(
+            color: isSelected ? selectedTextColor : unselectedTextColor,
+          ),
+        ),
+        selectedColor: selectedBackgroundColor,
+        disabledColor: Colors.grey,
+        onSelected: (bool selected) {
           if (widget.isClickable == true) {
-            setState(() {
-              isSelected = !isSelected;
-            });
+            isSelected = !isSelected;
+            if (isSelected) {
+              widget.addToHobbies!(widget.label);
+            } else {
+              widget.removeFromHobbies!(widget.label);
+            }
           }
         },
-        child: Chip(
-          label: Text(
-            widget.label,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black,
-            ),
-          ),
-          backgroundColor: isSelected == true
-              ? const Color.fromRGBO(35, 93, 113, 1)
-              : Colors.transparent,
-        ),
+        backgroundColor: isSelected == false
+            ? unselectedBackgroundColor
+            : selectedBackgroundColor, // Only for when not selected
       ),
     );
   }
