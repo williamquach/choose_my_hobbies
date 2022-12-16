@@ -2,7 +2,9 @@ import 'package:choose_my_hobbies/choice_item.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  final List<String> myHobbies;
+
+  const Header({Key? key, required this.myHobbies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,8 @@ class Header extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Vos passe-temps',
               textAlign: TextAlign.start,
               textDirection: TextDirection.ltr,
@@ -24,7 +26,24 @@ class Header extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            ChoiceItem(label: "Football"),
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    runAlignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: myHobbies
+                        .map((e) => ChoiceItem(
+                              label: e,
+                              isClickable: true,
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

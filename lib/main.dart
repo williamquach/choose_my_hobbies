@@ -59,11 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 SizedBox(
                   height: maxHeight / 3 * 2,
-                  child: const Header(),
+                  child: const Header(myHobbies: []),
                 ),
-                SizedBox(
-                  height: maxHeight / 3,
-                  child: const Footer(),
+                Expanded(
+                  child: Footer(),
                 ),
               ],
             );
